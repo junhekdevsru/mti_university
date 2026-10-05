@@ -17,8 +17,8 @@ func highestBitMask(y int) int {
 	return mask
 }
 
-// fastMul — обычное двоичное умножение.
-// Начинаем с коэффициента 1, то есть result = x.
+// обычное двоичное умножение
+// с коэффициента 1, т.е result = x
 func fastMul(x, y int) int {
 	if y < 1 {
 		panic("multiplier must be positive")
@@ -44,9 +44,7 @@ func isPowerOfTwo(value int) bool {
 	return value > 0 && value&(value-1) == 0
 }
 
-// isMersenne определяет числа вида 2^n - 1.
-//
-// Например:
+// isMersenne определяет числа вида 2^n - 1
 //
 //	7  = 2^3 - 1
 //	15 = 2^4 - 1
@@ -72,18 +70,7 @@ func writeBinaryFormula(source *strings.Builder, y int) {
 	}
 }
 
-// writeMersenneFormula использует формулу для чисел вида 2^n - 1.
-//
-// Для y = 15:
-//
-//	15 = 8 - (1 - 8)
-//
-// Если r = 8x, то:
-//
-//	negative = x - r = -7x
-//	r = r - negative = 8x - (-7x) = 15x
-//
-// Получается 3 сложения и 2 вычитания.
+
 func writeMersenneFormula(source *strings.Builder, y int) {
 	source.WriteString("\tr := x\n")
 
@@ -108,8 +95,6 @@ func fastMulSource(y int) (string, error) {
 
 	source.WriteString("func f(x int) int {\n")
 
-	// Для 15, 31, 63 и других достаточно больших чисел вида 2^n - 1
-	// используем более короткую формулу со сложениями и вычитаниями.
 	if isMersenne(y) && y >= 15 {
 		writeMersenneFormula(&source, y)
 	} else {
@@ -122,7 +107,7 @@ func fastMulSource(y int) (string, error) {
 	return source.String(), nil
 }
 
-// fastMulGen непосредственно печатает сгенерированную функцию.
+// непосредственно печатает сгенерированную функцию
 func fastMulGen(y int) error {
 	source, err := fastMulSource(y)
 	if err != nil {
